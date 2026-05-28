@@ -1,0 +1,117 @@
+@use 'variables' as *;
+
+// Responsive helpers
+@mixin breakpoint-up($size) {
+  @if $size == sm {
+    @media (min-width: $breakpoint-sm) { @content; }
+  } @else if $size == md {
+    @media (min-width: $breakpoint-md) { @content; }
+  } @else if $size == lg {
+    @media (min-width: $breakpoint-lg) { @content; }
+  } @else if $size == xl {
+    @media (min-width: $breakpoint-xl) { @content; }
+  } @else if $size == 2xl {
+    @media (min-width: $breakpoint-2xl) { @content; }
+  }
+}
+
+@mixin breakpoint-down($size) {
+  @if $size == sm {
+    @media (max-width: ($breakpoint-sm - 1)) { @content; }
+  } @else if $size == md {
+    @media (max-width: ($breakpoint-md - 1)) { @content; }
+  } @else if $size == lg {
+    @media (max-width: ($breakpoint-lg - 1)) { @content; }
+  } @else if $size == xl {
+    @media (max-width: ($breakpoint-xl - 1)) { @content; }
+  }
+}
+
+// Flex helpers
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+// Truncate text
+@mixin truncate($lines: 1) {
+  @if $lines == 1 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  } @else {
+    display: -webkit-box;
+    -webkit-line-clamp: $lines;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+// Focus ring tuned for dark theme
+@mixin focus-ring($color: $color-brand-end) {
+  &:focus-visible {
+    outline: 2px solid $color;
+    outline-offset: 2px;
+  }
+}
+
+// Container
+@mixin container($max: $container-max) {
+  width: 100%;
+  max-width: $max;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: $space-4;
+  padding-right: $space-4;
+
+  @include breakpoint-up(md) {
+    padding-left: $space-6;
+    padding-right: $space-6;
+  }
+}
+
+// Brand gradient text
+@mixin gradient-text {
+  background: $gradient-brand;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+// Outlined dark card (matches Figma whisky cards)
+@mixin card-outline {
+  background: $color-surface-elevated;
+  border: 1px solid $color-border;
+  border-radius: $radius-xl;
+}
+
+// Solid CTA button with brand gradient
+@mixin btn-brand {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-2;
+  padding: $space-3 $space-6;
+  border: 1px solid $color-brand-start;
+  border-radius: $radius-lg;
+  background: $gradient-brand-soft;
+  color: $color-text-primary;
+  font-weight: $font-weight-semibold;
+  text-transform: uppercase;
+  letter-spacing: $letter-spacing-wide;
+  transition: filter $transition-fast, transform $transition-fast;
+
+  &:hover:not(:disabled) {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+  }
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
+  @include focus-ring;
+}

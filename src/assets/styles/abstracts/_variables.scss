@@ -1,0 +1,121 @@
+// =============================================================================
+// Design Tokens — synced with Figma (SipUp / The Whisky Circle)
+// Palette built around a deep black surface with a copper→amber brand gradient.
+// =============================================================================
+
+// Brand / accent
+$color-brand-start: #912d00;   // deep copper
+$color-brand-mid:   #bb4b00;
+$color-brand-end:   #bb7900;   // amber
+
+$gradient-brand:        linear-gradient(90deg, $color-brand-start 0%, $color-brand-end 100%);
+$gradient-brand-soft:   linear-gradient(90deg, $color-brand-start 0%, #000 100%);
+$gradient-overlay-dark: linear-gradient(53.4deg, rgba(0, 0, 0, 0.55) 41%, rgba(102, 102, 102, 0.2) 98.6%);
+$gradient-card-fade:    linear-gradient(16.7deg, rgb(0, 0, 0) 16.26%, rgba(30, 30, 30, 0) 70.67%);
+$gradient-hero-bottom:  linear-gradient(21.9deg, rgb(0, 0, 0) 16.26%, rgba(30, 30, 30, 0) 70.67%);
+
+// Surfaces (dark theme is the default)
+$color-surface:           #000000;
+$color-surface-elevated:  #0a0807;
+$color-surface-card:      rgba(217, 217, 217, 0.04);
+$color-surface-overlay:   rgba(0, 0, 0, 0.55);
+$color-border:            #{$color-brand-start};
+$color-border-soft:       rgba(145, 45, 0, 0.4);
+$color-border-light:      #ffefef;
+
+// Text
+$color-text-primary:   #ffffff;
+$color-text-secondary: #c3c3c3;
+$color-text-muted:     #737373;
+$color-text-faded:     #606060;
+$color-text-strike:    #ab2f2f;
+
+// Semantic
+$color-success: #2e8b57;
+$color-warning: #d98a2b;
+$color-danger:  #ab2f2f;
+$color-info:    #2563eb;
+
+// Typography
+$font-family-display: 'Cormorant Garamond', 'Playfair Display', serif;
+$font-family-sans:    'Inter', system-ui, sans-serif;
+$font-family-script:  'Parisienne', 'Parslay', cursive;
+
+$font-size-xs:   0.75rem;   // 12
+$font-size-sm:   0.875rem;  // 14
+$font-size-base: 1rem;      // 16
+$font-size-lg:   1.25rem;   // 20
+$font-size-xl:   1.5rem;    // 24
+$font-size-2xl:  2rem;      // 32
+$font-size-3xl:  2.5rem;    // 40
+$font-size-4xl:  3rem;      // 48
+$font-size-5xl:  4rem;      // 64
+$font-size-6xl:  6rem;      // 96
+
+$font-weight-regular:  400;
+$font-weight-medium:   500;
+$font-weight-semibold: 600;
+$font-weight-bold:     700;
+
+$line-height-tight:   1.098;
+$line-height-base:    1.5;
+$line-height-relaxed: 1.75;
+
+$letter-spacing-tight: -0.01em;
+$letter-spacing-wide:  0.06em;
+$letter-spacing-wider: 0.12em;
+
+// Spacing scale (4px base)
+$space-0:  0;
+$space-1:  0.25rem;
+$space-2:  0.5rem;
+$space-3:  0.75rem;
+$space-4:  1rem;
+$space-5:  1.25rem;
+$space-6:  1.5rem;
+$space-8:  2rem;
+$space-10: 2.5rem;
+$space-12: 3rem;
+$space-16: 4rem;
+$space-20: 5rem;
+$space-24: 6rem;
+$space-32: 8rem;
+
+// Radii
+$radius-sm:   0.25rem;
+$radius-md:   0.5rem;
+$radius-lg:   0.625rem; // 10px — matches Figma button/inputs
+$radius-xl:   1.25rem;  // 20px — matches Figma cards
+$radius-2xl:  1.5rem;
+$radius-full: 9999px;
+
+// Shadows / glows
+$shadow-sm:   0 1px 2px rgba(0, 0, 0, 0.4);
+$shadow-md:   0 4px 16px rgba(0, 0, 0, 0.4);
+$shadow-lg:   0 10px 30px rgba(0, 0, 0, 0.55);
+$shadow-glow: 0 0 52px -10px #a83500;
+$shadow-cta:  -24px 1px 52px -10px #a83500;
+
+// Z-index scale
+$z-base:     1;
+$z-dropdown: 1000;
+$z-sticky:   1100;
+$z-overlay:  1200;
+$z-modal:    1300;
+$z-toast:    1400;
+$z-tooltip:  1500;
+
+// Breakpoints (design canvas is 1280px desktop-first)
+$breakpoint-sm:  640px;
+$breakpoint-md:  768px;
+$breakpoint-lg:  1024px;
+$breakpoint-xl:  1280px;
+$breakpoint-2xl: 1440px;
+
+// Container max — mirrors 1178px Figma content width
+$container-max: 1200px;
+
+// Transitions
+$transition-fast: 150ms ease;
+$transition-base: 250ms ease;
+$transition-slow: 400ms ease;

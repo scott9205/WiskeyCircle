@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#912d00"/>
+      <stop offset="1" stop-color="#bb7900"/>
+    </linearGradient>
+  </defs>
+  <circle cx="32" cy="32" r="30" fill="#0a0807" stroke="url(#g)" stroke-width="2"/>
+  <text x="32" y="40" font-family="serif" font-size="20" font-weight="700" text-anchor="middle" fill="url(#g)">TWC</text>
+</svg>
