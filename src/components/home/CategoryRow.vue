@@ -4,10 +4,11 @@ import { WHISKY_CATEGORIES } from '@/constants/app'
 
 const scrollEl = ref<HTMLElement | null>(null)
 
-function scrollBy(direction: 'left' | 'right') {
+function scrollByOne(direction: 'left' | 'right') {
   if (!scrollEl.value) return
-  const amount = scrollEl.value.clientWidth * 0.8
-  scrollEl.value.scrollBy({ left: direction === 'left' ? -amount : amount, behavior: 'smooth' })
+  const card = scrollEl.value.firstElementChild as HTMLElement | null
+  const step = (card?.offsetWidth ?? 209) + 26
+  scrollEl.value.scrollBy({ left: direction === 'left' ? -step : step, behavior: 'smooth' })
 }
 </script>
 
@@ -15,16 +16,24 @@ function scrollBy(direction: 'left' | 'right') {
   <section class="category-row">
     <div class="category-row__inner">
       <header class="category-row__head">
-        <h3>Explore by category</h3>
+        <h2 class="category-row__title">Explore By Category</h2>
         <a href="#" class="category-row__view-all">
-          View all categories
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+          View All Categories
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M13 6l6 6-6 6"/>
+          </svg>
         </a>
       </header>
 
       <div class="category-row__scroller-wrap">
-        <button class="category-row__nav category-row__nav--left" aria-label="Scroll left" @click="scrollBy('left')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+        <button
+          class="category-row__nav category-row__nav--left"
+          aria-label="Previous category"
+          @click="scrollByOne('left')"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 6l-6 6 6 6"/>
+          </svg>
         </button>
 
         <div ref="scrollEl" class="category-row__scroller">
@@ -39,17 +48,25 @@ function scrollBy(direction: 'left' | 'right') {
               aria-hidden="true"
             />
             <div class="category-tile__overlay" aria-hidden="true" />
-            <div class="category-tile__footer">
-              <p>{{ category.label }}</p>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
+            <div class="category-tile__pill">
+              <p class="category-tile__label">{{ category.label }}</p>
+              <button class="category-tile__arrow" type="button" aria-label="Open category">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 19 19 5M9 5h10v10"/>
+                </svg>
+              </button>
             </div>
           </article>
         </div>
 
-        <button class="category-row__nav category-row__nav--right" aria-label="Scroll right" @click="scrollBy('right')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+        <button
+          class="category-row__nav category-row__nav--right"
+          aria-label="Next category"
+          @click="scrollByOne('right')"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m9 6 6 6-6 6"/>
+          </svg>
         </button>
       </div>
     </div>
@@ -61,63 +78,73 @@ function scrollBy(direction: 'left' | 'right') {
 
 .category-row {
   background: $color-surface;
-  padding: $space-16 0;
+  padding-top: 60px;
+  padding-bottom: 60px;
 
-  &__inner { @include container; position: relative; }
+  &__inner {
+    @include container;
+    position: relative;
+  }
 
+  // ============== Heading bar ==============
   &__head {
-    @include flex-between;
-    flex-wrap: wrap;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     gap: $space-4;
-    margin-bottom: $space-10;
+    margin-bottom: $space-6;
+    flex-wrap: wrap;
+  }
 
-    h3 {
-      font-family: $font-family-sans;
-      font-size: $font-size-lg;
-      text-transform: uppercase;
-      letter-spacing: $letter-spacing-wide;
-      font-weight: $font-weight-medium;
-    }
+  &__title {
+    font-family: $font-family-display;
+    font-weight: $font-weight-medium;
+    font-size: 24px;
+    color: $color-text-primary;
+    letter-spacing: 0.02em;
+    text-transform: capitalize;
   }
 
   &__view-all {
     display: inline-flex;
     align-items: center;
-    gap: $space-2;
+    gap: 10px;
+    font-family: $font-family-display;
+    font-style: italic;
+    font-size: 22px;
+    font-weight: $font-weight-medium;
     color: $color-text-primary;
-    font-size: $font-size-lg;
-    text-transform: uppercase;
-    letter-spacing: $letter-spacing-wide;
     transition: color $transition-fast;
+    @include focus-ring;
 
-    svg { width: 22px; height: 22px; }
+    svg { width: 24px; height: 24px; color: $color-brand-end; }
     &:hover { color: $color-brand-end; }
   }
 
-  &__scroller-wrap {
-    position: relative;
-  }
+  // ============== Scroller ==============
+  &__scroller-wrap { position: relative; }
 
   &__scroller {
     display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: minmax(220px, 1fr);
-    gap: $space-6;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 26px;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
-    padding-bottom: $space-2;
+    padding-bottom: 4px;
 
     &::-webkit-scrollbar { display: none; }
     scrollbar-width: none;
 
-    @include breakpoint-up(lg) {
-      grid-template-columns: repeat(5, 1fr);
-      grid-auto-flow: row;
-      grid-auto-columns: auto;
-      overflow: visible;
+    @include breakpoint-down(lg) {
+      grid-template-columns: repeat(5, 209px);
+    }
+
+    @include breakpoint-down(md) {
+      grid-template-columns: repeat(5, 70vw);
     }
   }
 
+  // ============== Carousel nav ==============
   &__nav {
     @include flex-center;
     position: absolute;
@@ -126,38 +153,38 @@ function scrollBy(direction: 'left' | 'right') {
     width: 42px;
     height: 42px;
     border-radius: $radius-full;
-    background: $gradient-brand;
-    color: $color-text-primary;
-    box-shadow: $shadow-md;
+    background: linear-gradient(135deg, #6b1e00 0%, #c97a1f 100%);
+    color: #fff;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
     z-index: 2;
-    transition: filter $transition-fast;
+    border: none;
+    cursor: pointer;
+    transition: filter $transition-fast, transform $transition-fast;
+    @include focus-ring;
 
-    svg { width: 20px; height: 20px; }
-    &:hover { filter: brightness(1.15); }
+    svg { width: 22px; height: 22px; }
+    &:hover { filter: brightness(1.15); transform: translateY(-50%) scale(1.05); }
 
-    &--left  { left: -20px; }
-    &--right { right: -20px; }
-
-    @include breakpoint-up(lg) { display: none; }
+    &--left  { left: -21px; }
+    &--right { right: -21px; }
   }
 }
 
 .category-tile {
   position: relative;
   height: 280px;
-  border: 1px solid $color-brand-start;
-  border-radius: $radius-xl;
+  border-radius: 20px;
   overflow: hidden;
   scroll-snap-align: start;
   cursor: pointer;
   transition: transform $transition-base;
+  background: #110b08;
 
-  &:hover { transform: translateY(-4px); }
+  &:hover { transform: translateY(-3px); }
 
   &__media {
     position: absolute;
     inset: 0;
-    background-color: #2a1a14;
     background-size: cover;
     background-position: center;
   }
@@ -165,30 +192,52 @@ function scrollBy(direction: 'left' | 'right') {
   &__overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(27deg, #000 5%, rgba(30, 30, 30, 0) 61%);
+    background: linear-gradient(180deg, transparent 40%, rgba(0, 0, 0, 0.6) 80%, rgba(0, 0, 0, 0.95) 100%);
   }
 
-  &__footer {
+  // ============== Pill at the bottom ==============
+  &__pill {
     position: absolute;
     left: 0;
     right: 0;
     bottom: 0;
-    @include flex-between;
-    gap: $space-3;
-    padding: $space-4 $space-5;
-    backdrop-filter: blur(4.7px);
-    background: rgba(217, 217, 217, 0.04);
-    border-top: 1px solid $color-border-light;
-    border-bottom-left-radius: $radius-xl;
-    border-bottom-right-radius: $radius-xl;
+    height: 61px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px 0 22px;
+    background: rgba(20, 14, 10, 0.65);
+    backdrop-filter: blur(8px);
+    border-top: 1px solid rgba(255, 239, 239, 0.25);
+  }
 
-    p {
-      font-family: $font-family-display;
-      font-size: $font-size-base;
-      line-height: 1.1;
-      text-transform: capitalize;
+  &__label {
+    font-family: $font-family-display;
+    font-weight: $font-weight-medium;
+    font-size: 18px;
+    line-height: 1.05;
+    color: $color-text-primary;
+    text-transform: capitalize;
+    letter-spacing: 0.01em;
+    white-space: pre-line;
+  }
+
+  &__arrow {
+    @include flex-center;
+    width: 24px;
+    height: 24px;
+    color: $color-text-primary;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: color $transition-fast, transform $transition-fast;
+
+    svg { width: 22px; height: 22px; }
+
+    &:hover {
+      color: $color-brand-end;
+      transform: translate(2px, -2px);
     }
-    svg { width: 22px; height: 22px; color: $color-text-primary; }
   }
 }
 </style>

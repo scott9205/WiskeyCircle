@@ -69,12 +69,18 @@ export const TRUST_FEATURES = [
   },
 ] as const
 
+import catSingleMalt from '@/assets/figma/cat-single-malt.png'
+import catBourbon from '@/assets/figma/cat-bourbon.png'
+import catIrish from '@/assets/figma/cat-irish.png'
+import catJapanese from '@/assets/figma/cat-japanese.png'
+import catLimited from '@/assets/figma/cat-limited.png'
+
 export const WHISKY_CATEGORIES = [
-  { label: 'Single Malt Scotch', image: '/images/category-single-malt.jpg' },
-  { label: 'Bourbon Whisky',     image: '/images/category-bourbon.jpg' },
-  { label: 'Irish Whisky',       image: '/images/category-irish.jpg' },
-  { label: 'Japanese Whiskey',   image: '/images/category-japanese.jpg' },
-  { label: 'Limited Editions',   image: '/images/category-limited.jpg' },
+  { label: 'Single\nMalt Scotch', image: catSingleMalt },
+  { label: 'Bourbon\nWhisky',     image: catBourbon },
+  { label: 'Irish\nWhisky',       image: catIrish },
+  { label: 'Japanese\nWhiskey',   image: catJapanese },
+  { label: 'Limited\nEditions',   image: catLimited },
 ] as const
 
 export const SOCIAL_LINKS = {

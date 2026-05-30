@@ -9,8 +9,9 @@ import WhiskyProductCard from '@/components/home/WhiskyProductCard.vue'
 import OwnTheNightBanner from '@/components/home/OwnTheNightBanner.vue'
 import EveryPourBanner from '@/components/home/EveryPourBanner.vue'
 import TrustStrip from '@/components/home/TrustStrip.vue'
+import bottleImg from '@/assets/figma/bottle-bourbon.png'
 
-const featuredWhiskies = Array.from({ length: 9 }).map((_, i) => ({
+const whiskies = Array.from({ length: 9 }).map((_, i) => ({
   id: `whisky-${i + 1}`,
   name: 'The Macallan 18 Sherry Oak',
   category: 'Single Malt Scotch',
@@ -18,8 +19,7 @@ const featuredWhiskies = Array.from({ length: 9 }).map((_, i) => ({
   abv: '43% ABV',
   price: '£20.00',
   oldPrice: '£20.00',
-  image:
-    'https://images.unsplash.com/photo-1582718471137-c3967ffb1c42?w=600&q=80&auto=format',
+  image: bottleImg,
 }))
 </script>
 
@@ -31,12 +31,12 @@ const featuredWhiskies = Array.from({ length: 9 }).map((_, i) => ({
 
   <SignatureBanner />
 
-  <!-- Featured 3x3 grid -->
-  <section class="featured">
-    <div class="featured__inner">
-      <div class="featured__grid">
+  <!-- 6-card product grid -->
+  <section class="product-section">
+    <div class="product-section__inner">
+      <div class="product-section__grid">
         <WhiskyProductCard
-          v-for="w in featuredWhiskies.slice(0, 6)"
+          v-for="w in whiskies.slice(0, 6)"
           :key="w.id"
           v-bind="w"
         />
@@ -46,29 +46,30 @@ const featuredWhiskies = Array.from({ length: 9 }).map((_, i) => ({
 
   <OwnTheNightBanner />
 
-  <section class="featured featured--more">
-    <div class="featured__inner">
-      <div class="featured__heading">
-        <p class="featured__eyebrow">Handpicked for you</p>
-        <h2 class="featured__title">Featured whiskies</h2>
-        <p class="featured__lede">
-          Carefully curated whiskies from the world's finest distilleries.
+  <!-- Featured Whiskies — header + 3-card row -->
+  <section class="product-section product-section--featured">
+    <div class="product-section__inner">
+      <header class="featured-heading">
+        <p class="featured-heading__eyebrow">Handpicked For You</p>
+        <h2 class="featured-heading__title">Featured Whiskies</h2>
+        <p class="featured-heading__lede">
+          Carefully Curated Whiskies From The<br />
+          World's Finest Distilleries.
         </p>
-      </div>
+        <RouterLink :to="{ name: 'whiskies' }" class="featured-heading__view-all">
+          View All Whiskies
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M13 6l6 6-6 6"/>
+          </svg>
+        </RouterLink>
+      </header>
 
-      <div class="featured__grid">
+      <div class="product-section__grid">
         <WhiskyProductCard
-          v-for="w in featuredWhiskies.slice(0, 3)"
+          v-for="w in whiskies.slice(6, 9)"
           :key="`extra-${w.id}`"
           v-bind="w"
         />
-      </div>
-
-      <div class="featured__footer">
-        <RouterLink :to="{ name: 'whiskies' }" class="featured__view-all">
-          View all whiskies
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" /></svg>
-        </RouterLink>
       </div>
     </div>
   </section>
@@ -80,64 +81,74 @@ const featuredWhiskies = Array.from({ length: 9 }).map((_, i) => ({
 <style lang="scss" scoped>
 @use '@/assets/styles/abstracts' as *;
 
-.featured {
+.product-section {
   background: $color-surface;
-  padding: $space-16 0;
+  padding: 30px 0;
+
+  &--featured { padding-top: 80px; padding-bottom: 60px; }
 
   &__inner { @include container; }
 
   &__grid {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: $space-6;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 11px;
+    row-gap: 11px;
+    margin-bottom: 11px;
 
-    @include breakpoint-up(md) { grid-template-columns: repeat(2, 1fr); }
-    @include breakpoint-up(lg) { grid-template-columns: repeat(3, 1fr); }
+    @include breakpoint-down(lg) { grid-template-columns: repeat(2, 1fr); }
+    @include breakpoint-down(md) { grid-template-columns: 1fr; }
   }
+}
 
-  &__heading {
-    text-align: center;
-    margin-bottom: $space-10;
-  }
+.featured-heading {
+  text-align: center;
+  margin-bottom: 40px;
 
   &__eyebrow {
     @include gradient-text;
-    font-size: $font-size-sm;
+    font-family: $font-family-sans;
+    font-size: 13px;
+    font-weight: $font-weight-semibold;
     text-transform: uppercase;
-    letter-spacing: $letter-spacing-wide;
-    margin-bottom: $space-4;
+    letter-spacing: $letter-spacing-wider;
+    margin: 0 0 18px 0;
   }
 
   &__title {
     font-family: $font-family-display;
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    letter-spacing: $letter-spacing-wide;
-    margin-bottom: $space-3;
+    font-weight: $font-weight-medium;
+    font-size: 60px;
+    line-height: 1.05;
+    letter-spacing: 0.02em;
+    color: $color-text-primary;
     text-transform: capitalize;
+    margin: 0 0 14px 0;
+
+    @include breakpoint-down(lg) { font-size: 44px; }
+    @include breakpoint-down(md) { font-size: 32px; }
   }
 
   &__lede {
+    font-family: $font-family-sans;
+    font-size: 14px;
+    font-weight: $font-weight-medium;
     color: $color-text-primary;
-    font-weight: $font-weight-semibold;
-    font-size: $font-size-sm;
-    max-width: 32rem;
-    margin: 0 auto;
-  }
-
-  &__footer {
-    @include flex-center;
-    margin-top: $space-10;
+    line-height: 1.6;
+    max-width: 360px;
+    margin: 0 auto 22px;
   }
 
   &__view-all {
     @include gradient-text;
     display: inline-flex;
     align-items: center;
-    gap: $space-3;
-    font-size: $font-size-sm;
-    font-weight: $font-weight-semibold;
+    gap: 10px;
+    font-family: $font-family-sans;
+    font-size: 13px;
+    font-weight: $font-weight-bold;
     text-transform: uppercase;
-    letter-spacing: $letter-spacing-wide;
+    letter-spacing: $letter-spacing-wider;
 
     svg { width: 22px; height: 22px; color: $color-brand-end; }
   }

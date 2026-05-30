@@ -62,7 +62,7 @@
   }
 }
 
-// Container
+// Container — matches Figma 1178px content area inside 1280px frame
 @mixin container($max: $container-max) {
   width: 100%;
   max-width: $max;
@@ -75,6 +75,25 @@
     padding-left: $space-6;
     padding-right: $space-6;
   }
+
+  @include breakpoint-up(xl) {
+    padding-left: $space-4;
+    padding-right: $space-4;
+  }
+}
+
+// Full-bleed wrapper (used for hero / signature / pour banners)
+@mixin full-bleed {
+  position: relative;
+  width: 100%;
+}
+
+// Pill / search input shape
+@mixin pill($height: 37px) {
+  height: $height;
+  border-radius: $radius-full;
+  border: 1px solid $color-brand-start;
+  background: transparent;
 }
 
 // Brand gradient text

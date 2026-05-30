@@ -1,20 +1,23 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
+import ownNight from '@/assets/figma/own-night.png'
 </script>
 
 <template>
   <section class="own-night">
     <div class="own-night__inner">
-      <div class="own-night__media" aria-hidden="true" />
+      <div class="own-night__media" :style="{ '--bg': `url(${ownNight})` }" aria-hidden="true" />
       <div class="own-night__copy">
-        <h2 class="own-night__title">Own the night.</h2>
+        <h2 class="own-night__title">Own The Night.</h2>
         <p class="own-night__sub">
-          Smooth character. Bold presence.<br />
-          Whiskey that <span class="own-night__script">moves</span> with you.
+          Smooth Character. Bold Presence.<br />
+          Whiskey That <span class="own-night__script">Moves</span> With You.
         </p>
         <RouterLink :to="{ name: 'whiskies' }" class="own-night__cta">
-          Explore Collection
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+          <span>EXPLORE COLLECTION</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M13 6l6 6-6 6"/>
+          </svg>
         </RouterLink>
       </div>
     </div>
@@ -25,63 +28,111 @@ import { RouterLink } from 'vue-router'
 @use '@/assets/styles/abstracts' as *;
 
 .own-night {
-  padding: $space-12 0;
+  padding: 30px 0;
   background: $color-surface;
 
   &__inner {
     @include container;
     position: relative;
     overflow: hidden;
-    border: 1px solid $color-brand-start;
-    border-radius: $radius-xl;
-    min-height: 527px;
-    display: grid;
-    align-items: end;
-    background:
-      linear-gradient(to right, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 60%, rgba(0,0,0,0.7) 100%),
-      url('https://images.unsplash.com/photo-1574483611379-69dec59c20f6?w=2000&q=80') center/cover no-repeat;
+    border-radius: 20px;
+    aspect-ratio: 1177 / 527;
+    display: flex;
+  }
+
+  &__media {
+    position: absolute;
+    inset: 0;
+    background-image: var(--bg);
+    background-size: cover;
+    background-position: left center;
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        90deg,
+        rgba(0, 0, 0, 0) 0%,
+        rgba(0, 0, 0, 0) 45%,
+        rgba(0, 0, 0, 0.7) 70%,
+        rgba(0, 0, 0, 0.9) 100%
+      );
+    }
   }
 
   &__copy {
-    padding: $space-12 $space-10;
-    max-width: 560px;
+    position: relative;
     margin-left: auto;
+    width: 50%;
+    max-width: 540px;
+    padding: 119px 48px 0 0;
+
+    @include breakpoint-down(md) {
+      width: 100%;
+      padding: 24px;
+      max-width: none;
+      background: linear-gradient(0deg, rgba(0,0,0,0.85), rgba(0,0,0,0.4));
+      align-self: flex-end;
+    }
   }
 
   &__title {
     font-family: $font-family-display;
-    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: $font-weight-medium;
+    font-size: 64px;
+    line-height: 1.1;
+    letter-spacing: 0.02em;
+    color: $color-text-primary;
     text-transform: capitalize;
-    letter-spacing: $letter-spacing-wide;
-    margin-bottom: $space-6;
+    margin: 0 0 16px 0;
+
+    @include breakpoint-down(lg) { font-size: 44px; }
+    @include breakpoint-down(md) { font-size: 32px; }
   }
 
   &__sub {
     font-family: $font-family-display;
-    font-size: $font-size-xl;
-    line-height: 1.3;
-    margin-bottom: $space-6;
+    font-weight: $font-weight-medium;
+    font-size: 22px;
+    line-height: 1.4;
+    color: $color-text-primary;
+    margin: 0 0 34px 0;
+
+    @include breakpoint-down(md) { font-size: 16px; margin-bottom: 20px; }
   }
 
   &__script {
     font-family: $font-family-script;
+    font-style: italic;
     color: $color-brand-end;
+    font-size: 1.15em;
   }
 
   &__cta {
     display: inline-flex;
     align-items: center;
-    gap: $space-3;
-    padding: $space-3 $space-8;
-    border: 1px solid $color-text-primary;
+    gap: 16px;
+    height: 53px;
+    padding: 0 24px;
+    border: 1px solid #fff;
     border-radius: $radius-lg;
     color: $color-text-primary;
-    font-family: $font-family-display;
-    font-size: $font-size-xl;
-    text-transform: capitalize;
+    font-family: $font-family-sans;
+    font-size: 14px;
+    font-weight: $font-weight-bold;
+    text-transform: uppercase;
+    letter-spacing: $letter-spacing-wide;
+    transition: background $transition-fast, color $transition-fast;
+    @include focus-ring;
 
-    svg { width: 22px; height: 22px; }
-    &:hover { background: rgba(255, 255, 255, 0.08); }
+    svg { width: 24px; height: 24px; }
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: $color-brand-end;
+      border-color: $color-brand-end;
+    }
   }
 }
 </style>

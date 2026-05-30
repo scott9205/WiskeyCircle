@@ -112,8 +112,9 @@ $breakpoint-lg:  1024px;
 $breakpoint-xl:  1280px;
 $breakpoint-2xl: 1440px;
 
-// Container max — mirrors 1178px Figma content width
-$container-max: 1200px;
+// Container max — mirrors 1178px Figma content width (1280px frame − 51px each side)
+$container-max: 1178px;
+$container-padding-x: 51px;
 
 // Transitions
 $transition-fast: 150ms ease;
